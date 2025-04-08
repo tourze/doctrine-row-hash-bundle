@@ -1,0 +1,1 @@
+# doctrine-row-hash-bundle
