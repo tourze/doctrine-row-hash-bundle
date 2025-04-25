@@ -57,13 +57,13 @@ class RowHashListener implements EntityCheckerInterface
 
     public function postUpdate(PostUpdateEventArgs $args): void
     {
-        $metadata = $args->getObjectManager()->getClassMetadata(get_class($args->getEntity()));
+        $metadata = $args->getObjectManager()->getClassMetadata(get_class($args->getObject()));
         $this->createRowHashMessage($metadata, $args->getObject()->getId());
     }
 
     public function postPersist(PostPersistEventArgs $args): void
     {
-        $metadata = $args->getObjectManager()->getClassMetadata(get_class($args->getEntity()));
+        $metadata = $args->getObjectManager()->getClassMetadata(get_class($args->getObject()));
         $this->createRowHashMessage($metadata, $args->getObject()->getId());
     }
 
