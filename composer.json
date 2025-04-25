@@ -20,7 +20,7 @@
     "symfony/yaml": "^6.4 || ^7.1",
     "tourze/doctrine-helper": "0.0.*",
     "tourze/easy-admin-attribute": "0.0.*",
-    "tourze/doctrine-entity-checker-bundle": "0.0.*",
+    "tourze/doctrine-entity-checker-bundle": "~0.0.8",
     "tourze/symfony-lock-command-bundle": "0.0.*",
     "tourze/symfony-async-bundle": "0.0.*"
   },
