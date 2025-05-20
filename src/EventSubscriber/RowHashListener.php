@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use DoctrineRowHashBundle\Attribute\RowHashColumn;
 use DoctrineRowHashBundle\Message\RowHashMessage;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PropertyAccess\Exception\UninitializedPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -25,7 +26,7 @@ use Tourze\DoctrineHelper\ReflectionHelper;
 class RowHashListener implements EntityCheckerInterface
 {
     public function __construct(
-        private readonly PropertyAccessor $propertyAccessor,
+        #[Autowire(service: 'doctrine-row-hash.property-accessor')] private readonly PropertyAccessor $propertyAccessor,
         private readonly MessageBusInterface $messageBus,
     ) {
     }
