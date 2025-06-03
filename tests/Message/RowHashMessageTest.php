@@ -4,7 +4,7 @@ namespace DoctrineRowHashBundle\Tests\Message;
 
 use DoctrineRowHashBundle\Message\RowHashMessage;
 use PHPUnit\Framework\TestCase;
-use Tourze\Symfony\Async\Message\AsyncMessageInterface;
+use Tourze\AsyncContracts\AsyncMessageInterface;
 
 class RowHashMessageTest extends TestCase
 {

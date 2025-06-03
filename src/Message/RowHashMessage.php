@@ -2,7 +2,7 @@
 
 namespace DoctrineRowHashBundle\Message;
 
-use Tourze\Symfony\Async\Message\AsyncMessageInterface;
+use Tourze\AsyncContracts\AsyncMessageInterface;
 
 class RowHashMessage implements AsyncMessageInterface
 {

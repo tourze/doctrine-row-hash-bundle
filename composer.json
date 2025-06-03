@@ -19,9 +19,9 @@
     "symfony/messenger": "^6.4",
     "symfony/property-access": "^6.4",
     "symfony/yaml": "^6.4 || ^7.1",
+    "tourze/async-contracts": "0.0.*",
     "tourze/doctrine-entity-checker-bundle": "~0.0.8",
     "tourze/doctrine-helper": "0.0.*",
-    "tourze/symfony-async-bundle": "0.0.*",
     "tourze/symfony-lock-command-bundle": "0.0.*"
   },
   "require-dev": {
