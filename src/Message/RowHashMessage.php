@@ -6,15 +6,9 @@ use Tourze\AsyncContracts\AsyncMessageInterface;
 
 class RowHashMessage implements AsyncMessageInterface
 {
-    /**
-     * @var array
-     */
-    private $columnNames;
+    private array $columnNames;
 
-    /**
-     * @return array
-     */
-    public function getColumnNames()
+    public function getColumnNames(): array
     {
         return $this->columnNames;
     }
@@ -24,44 +18,26 @@ class RowHashMessage implements AsyncMessageInterface
         $this->columnNames = $columnNames;
     }
 
-    /**
-     * @var string
-     */
-    private $className;
+    private string $className;
 
-    /**
-     * @return string
-     */
-    public function getClassName()
+    public function getClassName(): string
     {
         return $this->className;
     }
 
-    /**
-     * @param string $className
-     */
-    public function setClassName($className): void
+    public function setClassName(string $className): void
     {
         $this->className = $className;
     }
 
-    /**
-     * @var string
-     */
-    private $tableName;
+    private string $tableName;
 
-    /**
-     * @return string
-     */
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->tableName;
     }
 
-    /**
-     * @param string $tableName
-     */
-    public function setTableName($tableName): void
+    public function setTableName(string $tableName): void
     {
         $this->tableName = $tableName;
     }
