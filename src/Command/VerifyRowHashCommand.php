@@ -10,9 +10,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Tourze\LockCommandBundle\Command\LockableCommand;
 
-#[AsCommand(name: 'app:row-hash', description: '检查指定数据是否被篡改')]
+#[AsCommand(name: self::NAME, description: '检查指定数据是否被篡改')]
 class VerifyRowHashCommand extends LockableCommand
 {
+    private const NAME = 'app:row-hash';
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {

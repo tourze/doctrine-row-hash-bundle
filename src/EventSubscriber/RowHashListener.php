@@ -82,7 +82,7 @@ class RowHashListener implements EntityCheckerInterface
 
             try {
                 $oldValue = $this->propertyAccessor->getValue($entity, $property->getName());
-                if ($oldValue) {
+                if ($oldValue !== null) {
                     continue;
                 }
             } catch (UninitializedPropertyException $exception) {
