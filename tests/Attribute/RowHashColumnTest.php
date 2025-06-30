@@ -12,7 +12,12 @@ class RowHashColumnTest extends TestCase
         // 定义一个测试类
         $testClass = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
+            }
         };
 
         // 获取该类的反射并检查第一个属性是否具有RowHashColumn属性

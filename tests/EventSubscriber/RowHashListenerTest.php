@@ -39,11 +39,16 @@ class RowHashListenerTest extends TestCase
         // 创建一个带有RowHashColumn属性的测试实体
         $entity = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
 
             public function getId(): string
             {
                 return '123';
+            }
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
             }
         };
 
@@ -66,11 +71,16 @@ class RowHashListenerTest extends TestCase
         // 创建一个带有RowHashColumn属性的测试实体
         $entity = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
 
             public function getId(): string
             {
                 return '123';
+            }
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
             }
         };
 
@@ -108,11 +118,16 @@ class RowHashListenerTest extends TestCase
         // 创建一个带有RowHashColumn属性的测试实体
         $entity = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
 
             public function getId(): string
             {
                 return '123';
+            }
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
             }
         };
 
@@ -136,11 +151,16 @@ class RowHashListenerTest extends TestCase
         // 创建一个带有RowHashColumn属性的测试实体
         $entity = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
 
             public function getId(): string
             {
                 return '123';
+            }
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
             }
         };
 

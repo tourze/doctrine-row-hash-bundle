@@ -50,11 +50,16 @@ class DoctrineRowHashIntegrationTest extends TestCase
         // 创建测试实体
         $entity = new class() {
             #[RowHashColumn]
-            private ?string $rowHash = null;
+            private null $rowHash = null;
 
             public function getId(): string
             {
                 return '123';
+            }
+            
+            public function getRowHash(): null
+            {
+                return $this->rowHash;
             }
         };
 
