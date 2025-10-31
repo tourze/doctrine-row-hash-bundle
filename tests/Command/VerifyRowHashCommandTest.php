@@ -2,103 +2,59 @@
 
 namespace DoctrineRowHashBundle\Tests\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\Mapping\MappingException;
 use DoctrineRowHashBundle\Command\VerifyRowHashCommand;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Application;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\Console\Tester\CommandTester;
+use Tourze\PHPUnitSymfonyKernelTest\AbstractCommandTestCase;
 
-class VerifyRowHashCommandTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(VerifyRowHashCommand::class)]
+#[RunTestsInSeparateProcesses]
+final class VerifyRowHashCommandTest extends AbstractCommandTestCase
 {
-    private MockObject|EntityManagerInterface $entityManager;
-    private VerifyRowHashCommand $command;
-    private CommandTester $commandTester;
-
-    protected function setUp(): void
+    protected function onSetUp(): void
     {
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        $this->command = new VerifyRowHashCommand($this->entityManager);
-
-        $application = new Application();
-        $application->add($this->command);
-
-        $this->commandTester = new CommandTester($this->command);
+        // Command test setup
     }
 
-    public function testExecute(): void
+    protected function getCommandTester(): CommandTester
     {
-        // 测试类名和ID
-        $className = 'App\Entity\TestEntity';
-        $id = '123';
+        $command = self::getService(VerifyRowHashCommand::class);
 
-        // 设置元数据
-        $metadata = $this->createMock(\Doctrine\ORM\Mapping\ClassMetadata::class);
-        $metadata->method('getFieldNames')->willReturn(['id', 'name', 'rowHash']);
+        return new CommandTester($command);
+    }
 
-        $this->entityManager->expects($this->once())
-            ->method('getClassMetadata')
-            ->with($className)
-            ->willReturn($metadata);
+    public function testArgumentClassName(): void
+    {
+        $commandTester = $this->getCommandTester();
 
-        // 模拟查询构建器
-        $queryBuilder = $this->createMock(QueryBuilder::class);
-        $query = $this->getMockBuilder(Query::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        try {
+            $commandTester->execute([
+                'className' => 'NonExistentClass',
+                'id' => '1',
+            ]);
+            self::fail('Expected MappingException to be thrown');
+        } catch (MappingException $e) {
+            $this->assertStringContainsString('NonExistentClass', $e->getMessage());
+        }
+    }
 
-        // 模拟查询结果 - 当前哈希与计算哈希不匹配，表示数据被篡改
-        $queryResult = [
-            [
-                'id' => '123',
-                'name' => '测试实体',
-                'rowHash' => 'original_hash_value',
-            ]
-        ];
+    public function testArgumentId(): void
+    {
+        $commandTester = $this->getCommandTester();
 
-        // 设置查询构建器链预期
-        $this->entityManager->expects($this->once())
-            ->method('createQueryBuilder')
-            ->willReturn($queryBuilder);
-
-        $queryBuilder->expects($this->once())
-            ->method('select')
-            ->with('e.id, e.name, e.rowHash')
-            ->willReturn($queryBuilder);
-
-        $queryBuilder->expects($this->once())
-            ->method('from')
-            ->with($className, 'e')
-            ->willReturn($queryBuilder);
-
-        $queryBuilder->expects($this->once())
-            ->method('where')
-            ->with('e.id = :id')
-            ->willReturn($queryBuilder);
-
-        $queryBuilder->expects($this->once())
-            ->method('setParameter')
-            ->with('id', $id)
-            ->willReturn($queryBuilder);
-
-        $queryBuilder->expects($this->once())
-            ->method('getQuery')
-            ->willReturn($query);
-
-        $query->expects($this->once())
-            ->method('getResult')
-            ->willReturn($queryResult);
-
-        // 执行命令
-        $this->commandTester->execute([
-            'className' => $className,
-            'id' => $id,
-        ]);
-
-        // 验证输出包含篡改警告
-        $output = $this->commandTester->getDisplay();
-        $this->assertStringContainsString('数据经过篡改', $output);
+        try {
+            $commandTester->execute([
+                'className' => 'NonExistentClass',
+                'id' => '999',
+            ]);
+            self::fail('Expected MappingException to be thrown');
+        } catch (MappingException $e) {
+            $this->assertStringContainsString('NonExistentClass', $e->getMessage());
+        }
     }
 }

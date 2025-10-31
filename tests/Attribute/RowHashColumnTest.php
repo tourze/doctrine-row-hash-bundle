@@ -3,17 +3,29 @@
 namespace DoctrineRowHashBundle\Tests\Attribute;
 
 use DoctrineRowHashBundle\Attribute\RowHashColumn;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Tourze\PHPUnitSymfonyKernelTest\AbstractIntegrationTestCase;
 
-class RowHashColumnTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(RowHashColumn::class)]
+#[RunTestsInSeparateProcesses]
+final class RowHashColumnTest extends AbstractIntegrationTestCase
 {
+    protected function onSetUp(): void
+    {
+        // 属性测试不需要特殊的设置
+    }
+
     public function testAttributeCanBeApplied(): void
     {
         // 定义一个测试类
-        $testClass = new class() {
+        $testClass = new class {
             #[RowHashColumn]
             private null $rowHash = null;
-            
+
             public function getRowHash(): null
             {
                 return $this->rowHash;
@@ -32,7 +44,7 @@ class RowHashColumnTest extends TestCase
     {
         // 验证属性只能应用于类属性
         $reflection = new \ReflectionClass(RowHashColumn::class);
-        $attributes = $reflection->getAttributes();
+        $attributes = $reflection->getAttributes(\Attribute::class);
 
         $this->assertCount(1, $attributes, 'RowHashColumn应该有一个属性标记');
         $this->assertEquals(\Attribute::class, $attributes[0]->getName());

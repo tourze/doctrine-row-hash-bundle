@@ -1,19 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineRowHashBundle\Message;
 
 use Tourze\AsyncContracts\AsyncMessageInterface;
 
 class RowHashMessage implements AsyncMessageInterface
 {
+    /** @var array<string> */
     private array $columnNames;
 
+    /** @return array<string> */
     public function getColumnNames(): array
     {
         return $this->columnNames;
     }
 
-    public function setColumnNames($columnNames): void
+    /** @param array<string> $columnNames */
+    public function setColumnNames(array $columnNames): void
     {
         $this->columnNames = $columnNames;
     }

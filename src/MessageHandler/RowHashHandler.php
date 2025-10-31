@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineRowHashBundle\MessageHandler;
 
 use Doctrine\DBAL\Connection;
@@ -23,15 +25,23 @@ class RowHashHandler
             $columnNames[$i] = 'e.' . $columnNames[$i];
         }
         $selectString = implode(', ', $columnNames);
-        $qb = $this->entityManager->createQueryBuilder()
+        /** @var class-string $className */
+        $className = $message->getClassName();
+        $repository = $this->entityManager->getRepository($className);
+        $qb = $repository->createQueryBuilder('e')
             ->select($selectString)
-            ->from($message->getClassName(), 'e')
             ->where('e.id = :id')
             ->setParameter('id', $message->getId())
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+        ;
 
         // 得到哈希
-        $serializedEntity = serialize($qb[0]);
+        if (!is_array($qb) || !isset($qb[0])) {
+            throw new \RuntimeException('No query result found');
+        }
+        /** @var mixed $rawResult */
+        $rawResult = $qb[0];
+        $serializedEntity = serialize($rawResult);
         $hashValue = hash('sha256', $serializedEntity);
 
         // 修改数据

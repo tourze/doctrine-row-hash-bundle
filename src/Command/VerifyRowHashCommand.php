@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DoctrineRowHashBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +16,7 @@ use Tourze\LockCommandBundle\Command\LockableCommand;
 class VerifyRowHashCommand extends LockableCommand
 {
     private const NAME = 'app:row-hash';
+
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -29,7 +32,13 @@ class VerifyRowHashCommand extends LockableCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $className = $input->getArgument('className');
+        if (!is_string($className)) {
+            $output->writeln('<error>className argument must be a string</error>');
 
+            return Command::FAILURE;
+        }
+
+        /** @var class-string $className */
         $metaData = $this->entityManager->getClassMetadata($className);
         $columnNames = $metaData->getFieldNames();
 
@@ -44,21 +53,39 @@ class VerifyRowHashCommand extends LockableCommand
             $columnNames[$i] = 'e.' . $columnNames[$i];
         }
         $selectString = implode(', ', $columnNames);
-        $request = $this->entityManager->createQueryBuilder()
+        $repository = $this->entityManager->getRepository($className);
+        $request = $repository->createQueryBuilder('e')
             ->select($selectString)
-            ->from($className, 'e')
             ->where('e.id = :id')
             ->setParameter('id', $id)
-            ->getQuery()->getResult();
+            ->getQuery()->getResult()
+        ;
 
         // $oldHashValue = $request[0]->getRowHash();
-        $oldHashValue = $request[0]['rowHash'];
-        $request[0]['rowHash'] = null;
-        $serializedEntity = serialize($request[0]);
+        if (!is_array($request) || !isset($request[0])) {
+            $output->writeln('<error>No result found</error>');
+
+            return Command::FAILURE;
+        }
+
+        /** @var mixed $rawResult */
+        $rawResult = $request[0];
+        if (!is_array($rawResult) || !array_key_exists('rowHash', $rawResult)) {
+            $output->writeln('<error>Invalid result structure or missing rowHash field</error>');
+
+            return Command::FAILURE;
+        }
+
+        /** @var array<string, mixed> $resultRow */
+        $resultRow = $rawResult;
+        $oldHashValue = $resultRow['rowHash'];
+        $resultRow['rowHash'] = null;
+        $serializedEntity = serialize($resultRow);
         $newHashValue = hash('sha256', $serializedEntity);
 
-        if ($oldHashValue != $newHashValue) {
-            $output->writeln($id . '数据经过篡改');
+        if ($oldHashValue !== $newHashValue) {
+            $idString = is_string($id) || is_numeric($id) ? (string) $id : 'unknown';
+            $output->writeln($idString . '数据经过篡改');
         }
 
         return Command::SUCCESS;

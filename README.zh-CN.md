@@ -1,8 +1,12 @@
 # Doctrine Row Hash Bundle
 
-[English](README.md) | 中文
+[English](README.md) | [中文](README.zh-CN.md)
 
-这个Symfony Bundle提供了一种机制，用于在Doctrine实体中自动计算并存储行级别的哈希值。这对于检测数据是否被篡改非常有用。
+[![Latest Version](https://img.shields.io/packagist/v/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/doctrine-row-hash-bundle)
+[![License](https://img.shields.io/github/license/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/doctrine-row-hash-bundle)
+
+一个 Symfony Bundle，用于在 Doctrine 实体中自动计算并存储行级别的哈希值。这对于检测未授权的数据篡改和确保数据完整性非常有用。
 
 ## 功能特性
 
@@ -94,6 +98,8 @@ bin/console app:row-hash "App\Entity\YourEntity" 123
 
 欢迎提交Issue和Pull Request来改进这个Bundle。
 
+请参阅 [CONTRIBUTING.md](../../CONTRIBUTING.md) 了解如何为此项目做出贡献的详细信息。
+
 ## 许可证
 
-本项目采用MIT许可证。 
+本项目采用MIT许可证。请参阅 [License File](LICENSE) 了解更多信息。 

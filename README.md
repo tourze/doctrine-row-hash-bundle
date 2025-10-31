@@ -2,9 +2,11 @@
 
 [English](README.md) | [中文](README.zh-CN.md)
 
+[![Latest Version](https://img.shields.io/packagist/v/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/doctrine-row-hash-bundle)
 [![License](https://img.shields.io/github/license/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](LICENSE)
+[![Total Downloads](https://img.shields.io/packagist/dt/tourze/doctrine-row-hash-bundle.svg?style=flat-square)](https://packagist.org/packages/tourze/doctrine-row-hash-bundle)
 
-A Symfony Bundle that automatically calculates and stores row-level hash values in Doctrine entities. This is useful for detecting unauthorized data manipulation.
+A Symfony Bundle that automatically calculates and stores row-level hash values in Doctrine entities. This is useful for detecting unauthorized data manipulation and ensuring data integrity.
 
 ## Features
 
@@ -96,6 +98,8 @@ Run unit tests:
 
 Issues and Pull Requests are welcome to improve this Bundle.
 
+Please see [CONTRIBUTING.md](../../CONTRIBUTING.md) for details on how to contribute to this project.
+
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. Please see [License File](LICENSE) for more information.
