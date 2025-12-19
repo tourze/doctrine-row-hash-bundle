@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineRowHashBundle\Exception;
 
-class EntityMissingIdMethodException extends \InvalidArgumentException
+final class EntityMissingIdMethodException extends \InvalidArgumentException
 {
     public function __construct(string $entityClass)
     {

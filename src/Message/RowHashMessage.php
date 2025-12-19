@@ -6,7 +6,7 @@ namespace DoctrineRowHashBundle\Message;
 
 use Tourze\AsyncContracts\AsyncMessageInterface;
 
-class RowHashMessage implements AsyncMessageInterface
+final class RowHashMessage implements AsyncMessageInterface
 {
     /** @var array<string> */
     private array $columnNames;

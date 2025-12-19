@@ -10,7 +10,7 @@ use DoctrineRowHashBundle\Message\RowHashMessage;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class RowHashHandler
+final class RowHashHandler
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,

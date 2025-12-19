@@ -6,7 +6,7 @@ namespace DoctrineRowHashBundle\DependencyInjection;
 
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class DoctrineRowHashExtension extends AutoExtension
+final class DoctrineRowHashExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {

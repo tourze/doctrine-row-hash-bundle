@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Tourze\LockCommandBundle\Command\LockableCommand;
 
 #[AsCommand(name: self::NAME, description: '检查指定数据是否被篡改')]
-class VerifyRowHashCommand extends LockableCommand
+final class VerifyRowHashCommand extends LockableCommand
 {
     private const NAME = 'app:row-hash';
 

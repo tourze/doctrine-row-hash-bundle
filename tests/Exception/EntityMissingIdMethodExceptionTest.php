@@ -15,7 +15,6 @@ final class EntityMissingIdMethodExceptionTest extends AbstractExceptionTestCase
     public function testExceptionMessage(): void
     {
         $entityClass = 'App\Entity\TestEntity';
-        // @phpstan-ignore-next-line 异常类测试需要直接实例化来验证异常消息和类型
         $exception = new EntityMissingIdMethodException($entityClass);
 
         $this->assertStringContainsString($entityClass, $exception->getMessage());
